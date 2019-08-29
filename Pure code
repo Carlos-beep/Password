@@ -1,0 +1,48 @@
+Public Class Validar
+    Private ReadOnly Password As String = ""
+    Dim Intentos As Integer = 0
+    Private Sub Entrada_KeyDown(sender As Object, e As KeyEventArgs) Handles Entrada.KeyDown
+        If e.KeyCode = Keys.Enter Then
+            If Entrada.Text = Password Then
+                CONFIGURACION.Show()
+                Hide()
+            Else
+                Entrada.Text = ""
+                Intentos += 1
+                trys.Text = Intentos
+                If Intentos >= 3 Then
+                    MsgBox("Limite de intentos alcanzado" & vbCrLf &
+                           "Cerrando Middleware", MsgBoxStyle.Exclamation,
+                           Title:="Demasiados intentos")
+                    TXRX.Close()
+                End If
+            End If
+        End If
+    End Sub
+    Private Sub Validar_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        TXRX.Close()
+    End Sub
+    Private Sub Chec_CheckedChanged(sender As Object, e As EventArgs) Handles Chec.CheckedChanged
+        If Chec.Checked Then
+            Entrada.UseSystemPasswordChar = True
+        Else
+            Entrada.UseSystemPasswordChar = False
+        End If
+    End Sub
+    Private Sub PictureBox2_DoubleClick(sender As Object, e As EventArgs) Handles PictureBox2.DoubleClick
+        If Entrada.Text = Password Then
+            CONFIGURACION.Show()
+            Hide()
+        Else
+            Entrada.Text = ""
+            Intentos += 1
+            trys.Text = Intentos
+            If Intentos >= 3 Then
+                MsgBox("Limite de intentos alcanzado" & vbCrLf &
+                       "Cerrando Middleware", MsgBoxStyle.Exclamation,
+                       Title:="Demasiados intentos")
+                TXRX.Close()
+            End If
+        End If
+    End Sub
+End Class
